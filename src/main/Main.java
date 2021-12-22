@@ -22,7 +22,7 @@ public class Main {
 
     public static List<String> readCSVFile(String filePath) throws Exception {
 
-        //parsing a CSV file into Scanner class constructor
+        // Parse a CSV file using the Scanner constructor
 
         Scanner sc = null;
         try {
@@ -33,13 +33,15 @@ public class Main {
 
         List<String> data = new ArrayList<>();
 
-        sc.useDelimiter(",");   //sets the delimiter pattern
-        while (sc.hasNext())  //returns a boolean value
+        // Set the delimiter pattern (where the file splits)
+        sc.useDelimiter("\n");
+        while (sc.hasNext())
         {
-            System.out.println(sc.next());
-            data.add(sc.next().trim()); //find and returns the next complete token from this scanner
+            // Add each data line
+            data.add(sc.next().trim());
         }
-        sc.close();  //closes the scanner
+        // Closes the scanner
+        sc.close();
 
         return data;
     }

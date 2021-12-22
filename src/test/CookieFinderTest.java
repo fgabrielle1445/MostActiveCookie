@@ -1,26 +1,19 @@
-package main;
+package test;
+
+import org.junit.jupiter.api.*;
+import main.CookieFinder;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
 
-    public static void main(String[] args) throws Exception {
+public class CookieFinderTest {
 
-        List<String> data = Main.readCSVFile(args[0]);
+    CookieFinder cf1 = null;
 
-        CookieFinder cf = new CookieFinder(data);
-
-        List<String> mostActiveCookies = cf.findMostActiveCookie(args[2]);
-
-        for(String cookie: mostActiveCookies) {
-            System.out.println(cookie);
-        }
-
-    }
-
-    public static List<String> readCSVFile(String filePath) throws Exception {
+    private List<String> readCSVFile(String filePath) throws Exception {
 
         //parsing a CSV file into Scanner class constructor
 
@@ -44,3 +37,5 @@ public class Main {
     }
 
 }
+
+

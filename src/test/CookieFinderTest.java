@@ -15,11 +15,13 @@ public class CookieFinderTest {
 
     List<String> file1Data;
     List<String> file2Data;
+    List<String> file3Data;
 
     {
         try {
             file1Data = readCSVFile("src/test/sampleCSVFiles/sampleCookieFile1.csv");
             file2Data = readCSVFile("src/test/sampleCSVFiles/sampleCookieFile2.csv");
+            file3Data = readCSVFile("src/test/sampleCSVFiles/sampleCookieFile3.csv");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,18 +29,39 @@ public class CookieFinderTest {
 
     CookieFinder cf1 = new CookieFinder(file1Data);
     CookieFinder cf2 = new CookieFinder(file2Data);
+    CookieFinder cf3 = new CookieFinder(file3Data);
 
+    // Single most active cookie for a given day
     @Test
     public void singleMostActiveCookie() throws Exception {
         List<String> result = cf1.findMostActiveCookie("2018-12-09");
         assertArrayEquals(new String[]{"AtY0laUfhglK3lC7"}, listToArray(result));
     }
 
+    // More than one most active cookies for a given day
     @Test
     public void multipleMostActiveCookies() throws Exception {
         List<String> result = cf2.findMostActiveCookie("2018-12-09");
         assertArrayEquals(new String[]{"AtY0laUfhglK3lC7", "SAZuXPGUrfbcn5UA"}, listToArray(result));
 
+    }
+
+    // No active cookies on that day
+    @Test
+    public void noActiveCookies() throws Exception {
+        List<String> result  = cf1.findMostActiveCookie("2021-12-21");
+        assertArrayEquals(new String[]{}, listToArray(result));
+    }
+
+    // Invalid CSV format
+    @Test
+    public void invalidCSV() throws Exception {
+        Exception exception = assertThrows(Exception.class, () -> cf3.findMostActiveCookie("2018-12-09"));
+
+        String expectedMessage = "Improper CSV file format";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     /**

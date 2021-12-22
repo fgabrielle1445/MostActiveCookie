@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 public class CookieFinder {
 
@@ -44,13 +45,18 @@ public class CookieFinder {
 
             String[] lineData = line.split(",");
 
-            if(lineData.length == 2 && lineData[1].substring(0, lineData[1].indexOf("T")).equals(date)) {
+            if(lineData.length == 2) {
+                if(lineData[1].substring(0, lineData[1].indexOf("T")).equals(date)) {
+                    if(cookieCounts.containsKey(lineData[0])) {
+                        cookieCounts.put(lineData[0], cookieCounts.get(lineData[0]) + 1);
+                    }
+                    else {
+                        cookieCounts.put(lineData[0], 1);
+                    }
 
-                if(cookieCounts.containsKey(lineData[0])) {
-                    cookieCounts.put(lineData[0], cookieCounts.get(lineData[0] + 1));
-                }
-                else {
-                    cookieCounts.put(lineData[0], 1);
+                    if(cookieCounts.get(lineData[0]) > maxCount) {
+                        maxCount = cookieCounts.get(lineData[0]);
+                    }
                 }
 
             }
@@ -61,7 +67,6 @@ public class CookieFinder {
         }
 
         List<String> mostActiveCookies = new ArrayList<>();
-
         for(String cookie: cookieCounts.keySet()) {
             if(cookieCounts.get(cookie) == maxCount) {
                 mostActiveCookies.add(cookie);

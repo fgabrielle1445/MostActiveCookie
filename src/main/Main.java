@@ -36,6 +36,7 @@ public class Main {
         sc.useDelimiter(",");   //sets the delimiter pattern
         while (sc.hasNext())  //returns a boolean value
         {
+            System.out.println(sc.next());
             data.add(sc.next().trim()); //find and returns the next complete token from this scanner
         }
         sc.close();  //closes the scanner

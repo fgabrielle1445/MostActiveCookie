@@ -11,7 +11,23 @@ import java.util.Scanner;
 
 public class CookieFinderTest {
 
-    CookieFinder cf1 = null;
+    List<String> file1Data;
+
+    {
+        try {
+            file1Data = readCSVFile("src/test/sampleCSVFiles/sampleCookieFile1.csv");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    CookieFinder cf1 = new CookieFinder(file1Data);
+
+    @Test
+    public void findFile() throws Exception {
+        System.out.println(readCSVFile("src/test/sampleCSVFiles/sampleCookieFile1.csv"));
+        System.out.println(cf1.findMostActiveCookie("2018-12-09"));
+    }
 
     private List<String> readCSVFile(String filePath) throws Exception {
 
@@ -26,7 +42,7 @@ public class CookieFinderTest {
 
         List<String> data = new ArrayList<>();
 
-        sc.useDelimiter(",");   //sets the delimiter pattern
+        sc.useDelimiter("\n");   //sets the delimiter pattern
         while (sc.hasNext())  //returns a boolean value
         {
             data.add(sc.next().trim()); //find and returns the next complete token from this scanner
